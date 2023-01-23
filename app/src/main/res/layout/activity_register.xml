@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.perennial.openweatherapp.viewmodel.UserViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@color/color_primary_light"
+        android:gravity="center"
+        tools:context=".ui.RegisterActivity">
+
+        <ProgressBar
+            android:id="@+id/signUpProgressbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <RelativeLayout
+                    android:id="@+id/firstStep"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvFirstStep"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/fredoka_one"
+                        android:text="Here’s\nyour first\nstep with \nOpen Weather App"
+                        android:textColor="@color/color_primary_dark"
+                        android:textSize="@dimen/sp_25" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="@dimen/dp_130"
+                        android:layout_height="@dimen/dp_130"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_toEndOf="@id/tvFirstStep"
+                        app:cardCornerRadius="@dimen/dp_65">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/weather_splash" />
+                    </androidx.cardview.widget.CardView>
+
+                </RelativeLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/dp_50"
+                    app:cardCornerRadius="@dimen/dp_20">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/dp_50">
+
+                        <LinearLayout
+                            android:id="@+id/layoutEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_margin="@dimen/dp_10"
+                            android:orientation="vertical">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/dp_10"
+                                android:hint="Name"
+                                app:boxBackgroundColor="#20D81B60"
+                                app:boxCornerRadiusTopEnd="@dimen/dp_10"
+                                app:boxCornerRadiusTopStart="@dimen/dp_10">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etNameRegister"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@={viewModel.firstName}"
+                                    android:inputType="textPersonName" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/dp_10"
+                                android:layout_marginEnd="@dimen/dp_10"
+                                android:hint="Email"
+                                app:boxBackgroundColor="#20D81B60"
+                                app:boxCornerRadiusTopEnd="@dimen/dp_10"
+                                app:boxCornerRadiusTopStart="@dimen/dp_10">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etEmailSignUp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="textEmailAddress"
+                                    android:text="@={viewModel.emailAddress}"
+                                    tools:ignore="SpeakableTextPresentCheck" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/dp_10"
+                                android:hint="Number"
+                                app:boxBackgroundColor="#20D81B60"
+                                app:boxCornerRadiusTopEnd="@dimen/dp_10"
+                                app:boxCornerRadiusTopStart="@dimen/dp_10">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etNumberUp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="number"
+                                    android:text="@={viewModel.phoneNumber}"
+                                    tools:ignore="TouchTargetSizeCheck" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/dp_10"
+                                android:layout_marginEnd="@dimen/dp_10"
+                                android:hint="Password"
+                                app:boxBackgroundColor="#20D81B60"
+                                app:boxCornerRadiusTopEnd="@dimen/dp_10"
+                                app:boxCornerRadiusTopStart="@dimen/dp_10">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etPasswdUp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="textWebPassword"
+                                    android:text="@={viewModel.password}"
+                                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <Button
+                                android:id="@+id/btnSignup"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_marginStart="50dp"
+                                android:layout_marginTop="@dimen/dp_20"
+                                android:layout_marginEnd="50dp"
+                                android:background="@drawable/side_white_panel"
+                                android:fontFamily="@font/poppins_medium"
+                                android:text="@string/register"
+                                android:textAllCaps="false"
+                                android:textColor="@color/color_primary_dark"
+                                android:textSize="20sp" />
+
+                            <TextView
+                                android:id="@+id/tvHaveAnAccountUp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_20"
+                                android:text="Already have an account?"
+                                android:textAlignment="center"
+                                android:textColor="@color/color_primary_dark"
+                                android:textSize="17sp"
+                                android:textStyle="bold" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_20"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:weightSum="12">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="1dp"
+                                    android:layout_weight="3"
+                                    android:background="@color/color_primary_dark" />
+
+                                <TextView
+                                    style="@style/viewParent.headerText.NoMode"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="6"
+                                    android:text="Use other Methods"
+                                    android:textAlignment="center"
+                                    android:textSize="12sp" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="1dp"
+                                    android:layout_weight="3"
+                                    android:background="@color/color_primary_dark" />
+
+                            </LinearLayout>
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+        </ScrollView>
+
+    </RelativeLayout>
+
+</layout>
