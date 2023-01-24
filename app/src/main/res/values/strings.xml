@@ -4,4 +4,5 @@
     <string name="new_user_register_now">New user, Register From Here!</string>
     <string name="register">Register</string>
     <string name="please_wait">Please Wait...\nWe\'re running your request.</string>
+    <string name="search_city">city</string>
 </resources>

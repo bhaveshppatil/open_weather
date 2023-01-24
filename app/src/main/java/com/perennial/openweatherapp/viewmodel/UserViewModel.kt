@@ -9,9 +9,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.perennial.openweatherapp.db.User
+import com.perennial.openweatherapp.db.weather.WeatherModel
 import com.perennial.openweatherapp.repository.UserRepository
 import com.perennial.openweatherapp.utils.StateListener
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -107,8 +109,9 @@ class UserViewModel @Inject constructor(private val authRepository: UserReposito
                 return@launch
             }
         }
-
     }
+
+
 
     fun isUserLoggedIn() = liveData {
         val isUserLoggedIn = authRepository.isUserLoggedIn()
