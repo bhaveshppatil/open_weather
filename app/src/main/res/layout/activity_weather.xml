@@ -7,29 +7,17 @@
         android:layout_height="match_parent"
         android:background="@drawable/weather_bg"
         android:orientation="vertical"
-        android:padding="25dp"
         tools:context=".ui.WeatherActivity">
-
-        <SearchView
-            android:id="@+id/search_bar_temp"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_60"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:textSize="16sp"
-            android:background="@drawable/side_white_panel"
-            android:queryHint="@string/search_city" />
 
         <RelativeLayout
             android:id="@+id/mainContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/search_bar_temp"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_marginTop="@dimen/dp_20"
+            android:layout_margin="@dimen/dp_25"
             android:visibility="visible">
 
             <LinearLayout
@@ -64,7 +52,9 @@
                     android:id="@+id/weatherPNG"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/findingtwo" />
+
             </LinearLayout>
 
             <LinearLayout

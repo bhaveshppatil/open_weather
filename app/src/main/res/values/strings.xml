@@ -5,4 +5,7 @@
     <string name="register">Register</string>
     <string name="please_wait">Please Wait...\nWe\'re running your request.</string>
     <string name="search_city">city</string>
+    <string name="check_internet_connection">Check internet connection</string>
+    <string name="enable_gps_service">Please enable your GPS service</string>
+    <string name="proceed">Proceed</string>
 </resources>

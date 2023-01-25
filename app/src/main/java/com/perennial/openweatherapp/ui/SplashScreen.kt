@@ -1,4 +1,4 @@
-package com.perennial.openweatherapp
+package com.perennial.openweatherapp.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,9 +8,8 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.perennial.openweatherapp.R
 import com.perennial.openweatherapp.databinding.ActivityMainBinding
-import com.perennial.openweatherapp.ui.LoginActivity
-import com.perennial.openweatherapp.ui.WeatherActivity
 import com.perennial.openweatherapp.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

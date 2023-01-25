@@ -20,11 +20,11 @@ class UserRepository @Inject constructor(
 
     suspend fun logOutUser() = userDatabase.userDao().logOutUser()
 
-    suspend fun setUserLoggedIn() = userDataStore.loginUser()
+    suspend fun setUserLoggedIn(key: String, value: Boolean) = userDataStore.loginUser(key, value)
 
-    suspend fun isUserLoggedIn() = userDataStore.isUserLoggedIn()
+    suspend fun isUserLoggedIn(key: String, value: Boolean) = userDataStore.isUserLoggedIn(key, value)
 
-    suspend fun setUserLoggedOut() = userDataStore.logOutUser()
+    suspend fun setUserLoggedOut(key: String, value: Boolean) = userDataStore.logOutUser(key, value)
 
 
 }

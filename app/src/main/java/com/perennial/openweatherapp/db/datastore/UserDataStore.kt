@@ -1,41 +1,34 @@
 package com.perennial.openweatherapp.db.datastore
 
 import android.content.Context
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.preferencesDataStore
-import com.perennial.openweatherapp.utils.Constants.AUTH_DATASTORE_KEY
+import android.content.SharedPreferences
 import com.perennial.openweatherapp.utils.Constants.AUTH_DATASTORE_NAME
-import kotlinx.coroutines.flow.first
 
 class UserDataStore constructor(private val context: Context) {
 
-    private val Context.dataStore by preferencesDataStore(name = AUTH_DATASTORE_NAME)
+    private val preferences: SharedPreferences =
+        context.getSharedPreferences(AUTH_DATASTORE_NAME, Context.MODE_PRIVATE)
 
     //Marks the user as logged in
-    suspend fun loginUser() {
-        val dataStoreKey = booleanPreferencesKey(AUTH_DATASTORE_KEY)
-        context.dataStore.edit {
-            it[dataStoreKey] = true
+    fun loginUser(key: String, value: Boolean) {
+        val prefEditor: SharedPreferences.Editor = preferences.edit()
+        with(prefEditor) {
+            putBoolean(key, value)
+            commit()
         }
     }
 
     //Checks if the user is logged in
-    suspend fun isUserLoggedIn(): Boolean {
-        val dataStoreKey = booleanPreferencesKey(AUTH_DATASTORE_KEY)
-        val loginStatus = context.dataStore.data.first()
-
-        return loginStatus[dataStoreKey]
-            ?: false //If null return false else return value in datastore
+    fun isUserLoggedIn(key: String, value: Boolean): Boolean {
+        return preferences.getBoolean(key, value)
     }
 
     //Marks the user as logged out
-    suspend fun logOutUser() {
-        val dataStoreKey = booleanPreferencesKey(AUTH_DATASTORE_KEY)
-        context.dataStore.edit { token ->
-            token[dataStoreKey] = false
+    fun logOutUser(key: String, value: Boolean) {
+        val prefEditor: SharedPreferences.Editor = preferences.edit()
+        with(prefEditor) {
+            putBoolean(key, value)
+            commit()
         }
     }
-
-
 }

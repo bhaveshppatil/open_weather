@@ -39,6 +39,4 @@ object DatabaseModule {
             .build()
         return retrofit.create(ApiService::class.java)
     }
-
-
 }

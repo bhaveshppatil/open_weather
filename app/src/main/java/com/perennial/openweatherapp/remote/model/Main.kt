@@ -1,10 +1,10 @@
 package com.perennial.openweatherapp.remote.model
 
 data class Main(
-    val feels_like: Double,
-    val humidity: Int,
-    val pressure: Int,
-    val temp: Double,
-    val temp_max: Double,
-    val temp_min: Double
+    var feels_like: Double,
+    var humidity: Int,
+    var pressure: Int,
+    var temp: Double,
+    var temp_max: Double,
+    var temp_min: Double
 )

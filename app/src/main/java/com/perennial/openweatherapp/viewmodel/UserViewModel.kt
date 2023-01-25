@@ -1,7 +1,6 @@
 package com.perennial.openweatherapp.viewmodel
 
 import android.util.Log
-import android.view.View
 import androidx.databinding.Bindable
 import androidx.databinding.Observable
 import androidx.lifecycle.MutableLiveData
@@ -9,11 +8,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.perennial.openweatherapp.db.User
-import com.perennial.openweatherapp.db.weather.WeatherModel
 import com.perennial.openweatherapp.repository.UserRepository
+import com.perennial.openweatherapp.utils.Constants.AUTH_DATASTORE_KEY
 import com.perennial.openweatherapp.utils.StateListener
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -58,7 +56,7 @@ class UserViewModel @Inject constructor(private val authRepository: UserReposito
                     } else {
                         stateListener?.onSuccess("Welcome, ${user.firstName}")
 
-                        authRepository.setUserLoggedIn()
+                        authRepository.setUserLoggedIn(AUTH_DATASTORE_KEY, true)
 
                         return@collect
                     }
@@ -101,7 +99,7 @@ class UserViewModel @Inject constructor(private val authRepository: UserReposito
                 )
                 authRepository.registerUser(user)
                 stateListener?.onSuccess("Welcome, ${firstName.value}")
-                authRepository.setUserLoggedIn()
+                authRepository.setUserLoggedIn(AUTH_DATASTORE_KEY, true)
 
                 return@launch
             } catch (e: Exception) {
@@ -112,9 +110,8 @@ class UserViewModel @Inject constructor(private val authRepository: UserReposito
     }
 
 
-
     fun isUserLoggedIn() = liveData {
-        val isUserLoggedIn = authRepository.isUserLoggedIn()
+        val isUserLoggedIn = authRepository.isUserLoggedIn(AUTH_DATASTORE_KEY, false)
         Log.e("isUserLoggedIn", "isUserLoggedIn viewModel: isUserLoggedIn: $isUserLoggedIn")
         emit(isUserLoggedIn)
         return@liveData

@@ -13,10 +13,10 @@ class WeatherRepository @Inject constructor(private val apiService: ApiService, 
 
     private val responseHandler: ResponseHandler = ResponseHandler()
 
-    suspend fun getWeatherDataFromApi(city: String, apikey: String): Resource<WeatherResponse> {
+    suspend fun getWeatherDataFromApi(lat: Double, lon: Double, api_key : String): Resource<WeatherResponse> {
         return try {
             val weatherResponse: WeatherResponse =
-                apiService.getWeatherData(city = city, api_key = apikey)
+                apiService.getWeatherData(lat, lon, api_key)
             responseHandler.handleSuccess(weatherResponse)
         } catch (e: Exception) {
             responseHandler.handleException(e)
