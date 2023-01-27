@@ -2,4 +2,5 @@
 <resources>
     <dimen name="dp_130">130dp</dimen>
     <dimen name="dp_65">65dp</dimen>
+    <dimen name="sp_20">20sp</dimen>
 </resources>

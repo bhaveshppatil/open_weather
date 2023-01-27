@@ -1,13 +1,17 @@
 package com.perennial.openweatherapp.ui
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -35,6 +39,7 @@ class WeatherActivity : AppCompatActivity() {
     private val weatherViewModel: WeatherViewModel by viewModels()
     private lateinit var binding: ActivityWeatherBinding
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var actionBar: ActionBar
     private var imageUrl = ""
 
     override fun onStart() {
@@ -48,6 +53,12 @@ class WeatherActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_weather)
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        actionBar = supportActionBar!!
+        actionBar.setTitle("Open Weather")
+        actionBar.setSubtitle("Check your current temp.")
+        actionBar.setIcon(R.drawable.weather_action)
+        actionBar.setDisplayUseLogoEnabled(true)
+        actionBar.setDisplayShowHomeEnabled(true)
     }
 
     private fun loadWeatherFromApi(latitude: Double, longitude: Double) {
@@ -59,9 +70,9 @@ class WeatherActivity : AppCompatActivity() {
                     showToast(this, "Network error")
                     binding.errorText.text = it.message
                 }
-                Status.LOADING -> {
 
-                }
+                Status.LOADING ->{}
+
                 Status.SUCCESS -> {
                     binding.loader.visibility = View.GONE
                     binding.mainContainer.visibility = View.VISIBLE
@@ -74,7 +85,6 @@ class WeatherActivity : AppCompatActivity() {
     private fun updateUI(response: WeatherResponse?) {
         response?.let { it ->
             val address = "${it.sys.country} , ${it.name}"
-            actionBar?.setTitle(address)
             binding.address.text = address
             binding.updatedAt.text = it.dt.toString()
             val sunrise =
@@ -90,7 +100,7 @@ class WeatherActivity : AppCompatActivity() {
                 imageUrl = "http://openweathermap.org/img/wn/${it.icon}@4x.png"
                 Log.d("iconImageUrl", imageUrl)
                 binding.status.text = it.description
-                Glide.with(binding.weatherPNG).load(imageUrl).centerCrop().into(binding.weatherPNG)
+                Glide.with(this@WeatherActivity).load(imageUrl).centerCrop().into(binding.weatherPNG)
             }
 
             binding.temp.text = "${it.main.temp}°C"
@@ -144,6 +154,18 @@ class WeatherActivity : AppCompatActivity() {
         } else {
             askForPermission()
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.action_item_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.history -> startActivity(Intent(this, HistoryActivity::class.java))
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onRequestPermissionsResult(

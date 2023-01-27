@@ -51,7 +51,8 @@
                 <ImageView
                     android:id="@+id/weatherPNG"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="170dp"
+                    android:layout_marginTop="@dimen/dp_20"
                     android:scaleType="fitCenter"
                     android:src="@drawable/findingtwo" />
 
@@ -61,8 +62,8 @@
                 android:id="@+id/overviewContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_20"
                 android:layout_above="@id/detailsContainer"
-                android:layout_below="@+id/addressContainer"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
                 android:orientation="vertical">
