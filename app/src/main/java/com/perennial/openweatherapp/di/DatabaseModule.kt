@@ -2,7 +2,9 @@ package com.perennial.openweatherapp.di
 
 import android.app.Application
 import androidx.room.Room
-import com.perennial.openweatherapp.db.UserDatabase
+import com.perennial.openweatherapp.db.datastore.UserDataStore
+import com.perennial.openweatherapp.db.user.UserDatabase
+import com.perennial.openweatherapp.db.weather.WeatherDatabase
 import com.perennial.openweatherapp.remote.ApiService
 import com.perennial.openweatherapp.utils.Constants.BASE_URL
 import dagger.Module
@@ -19,6 +21,10 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
 
+    private val httpLoggingInterceptor =
+        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+
+
     @Singleton
     @Provides
     fun providesAppDatabase(application: Application): UserDatabase {
@@ -27,8 +33,19 @@ object DatabaseModule {
             .build()
     }
 
-    private val httpLoggingInterceptor =
-        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+    @Singleton
+    @Provides
+    fun provideWeatherDatabase(application: Application): WeatherDatabase {
+        return Room.databaseBuilder(application, WeatherDatabase::class.java, "weather_history.db")
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun providesAuthDatastore(application: Application): UserDataStore {
+        return UserDataStore(application)
+    }
 
     @Provides
     fun provideApiService(): ApiService {

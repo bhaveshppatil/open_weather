@@ -1,11 +1,10 @@
-package com.perennial.openweatherapp.db
+package com.perennial.openweatherapp.db.user
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.perennial.openweatherapp.db.weather.WeatherModel
+import com.perennial.openweatherapp.db.user.User
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -33,7 +33,6 @@ class LoginActivity : AppCompatActivity(), StateListener {
         binding.tvNewUser.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
-            finish()
         }
 
         binding.btnLoginUp.setOnClickListener {
@@ -51,8 +50,6 @@ class LoginActivity : AppCompatActivity(), StateListener {
         showToast(this, message!!)
         printLog(message)
         startActivity(Intent(this, WeatherActivity::class.java))
-        finish()
-
     }
 
     override fun onError(message: String) {

@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
-import com.perennial.openweatherapp.db.User
+import com.perennial.openweatherapp.db.user.User
 import com.perennial.openweatherapp.repository.UserRepository
 import com.perennial.openweatherapp.utils.Constants.AUTH_DATASTORE_KEY
 import com.perennial.openweatherapp.utils.StateListener
@@ -115,6 +115,12 @@ class UserViewModel @Inject constructor(private val authRepository: UserReposito
         Log.e("isUserLoggedIn", "isUserLoggedIn viewModel: isUserLoggedIn: $isUserLoggedIn")
         emit(isUserLoggedIn)
         return@liveData
+    }
+    fun logoutUser() {
+        viewModelScope.launch {
+         authRepository.logOutUser()
+            authRepository.setUserLoggedOut(AUTH_DATASTORE_KEY, false)
+        }
     }
 
     override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {}

@@ -1,9 +1,8 @@
 package com.perennial.openweatherapp.repository
 
-import com.perennial.openweatherapp.db.User
-import com.perennial.openweatherapp.db.UserDatabase
+import com.perennial.openweatherapp.db.user.User
+import com.perennial.openweatherapp.db.user.UserDatabase
 import com.perennial.openweatherapp.db.datastore.UserDataStore
-import com.perennial.openweatherapp.db.weather.WeatherModel
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(

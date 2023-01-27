@@ -1,6 +1,7 @@
 package com.perennial.openweatherapp.ui
 
 import android.Manifest
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
@@ -12,6 +13,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -28,6 +30,7 @@ import com.perennial.openweatherapp.utils.Constants
 import com.perennial.openweatherapp.utils.Constants.API_KEY
 import com.perennial.openweatherapp.utils.Constants.showToast
 import com.perennial.openweatherapp.utils.Status
+import com.perennial.openweatherapp.viewmodel.UserViewModel
 import com.perennial.openweatherapp.viewmodel.WeatherViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -37,6 +40,7 @@ import java.util.*
 class WeatherActivity : AppCompatActivity() {
 
     private val weatherViewModel: WeatherViewModel by viewModels()
+    private val userViewModel: UserViewModel by viewModels()
     private lateinit var binding: ActivityWeatherBinding
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var actionBar: ActionBar
@@ -54,8 +58,8 @@ class WeatherActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_weather)
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         actionBar = supportActionBar!!
-        actionBar.setTitle("Open Weather")
-        actionBar.setSubtitle("Check your current temp.")
+        actionBar.title = "Open Weather"
+        actionBar.subtitle = "Check your current temp."
         actionBar.setIcon(R.drawable.weather_action)
         actionBar.setDisplayUseLogoEnabled(true)
         actionBar.setDisplayShowHomeEnabled(true)
@@ -71,7 +75,7 @@ class WeatherActivity : AppCompatActivity() {
                     binding.errorText.text = it.message
                 }
 
-                Status.LOADING ->{}
+                Status.LOADING -> {}
 
                 Status.SUCCESS -> {
                     binding.loader.visibility = View.GONE
@@ -94,13 +98,14 @@ class WeatherActivity : AppCompatActivity() {
             val date = SimpleDateFormat(
                 "dd/MM/yyyy hh:mm a",
                 Locale.ENGLISH
-            ).format((Date(it.dt * 1000L)));
+            ).format((Date(it.dt * 1000L)))
 
             it.weather.forEach {
                 imageUrl = "http://openweathermap.org/img/wn/${it.icon}@4x.png"
                 Log.d("iconImageUrl", imageUrl)
                 binding.status.text = it.description
-                Glide.with(this@WeatherActivity).load(imageUrl).centerCrop().into(binding.weatherPNG)
+                Glide.with(this@WeatherActivity).load(imageUrl).centerCrop()
+                    .into(binding.weatherPNG)
             }
 
             binding.temp.text = "${it.main.temp}°C"
@@ -132,13 +137,13 @@ class WeatherActivity : AppCompatActivity() {
     private fun getLocationData() {
         if (ContextCompat.checkSelfPermission(
                 this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION,
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
                 if (location != null) {
                     val geocoder = Geocoder(this, Locale.getDefault())
-                    var address: kotlin.collections.List<Address>? = null
+                    var address: List<Address>? = null
                     try {
                         address = geocoder.getFromLocation(location.latitude, location.longitude, 1)
                         address?.let {
@@ -164,6 +169,23 @@ class WeatherActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.history -> startActivity(Intent(this, HistoryActivity::class.java))
+            R.id.menu_logout -> {
+                val dialog = AlertDialog.Builder(this@WeatherActivity)
+                dialog.apply {
+                    setTitle("Are you sure you want to Logout")
+                    setIcon(R.drawable.weather_action)
+                    setCancelable(true)
+                    setPositiveButton("Yes", DialogInterface.OnClickListener { _, _ ->
+                        userViewModel.logoutUser()
+                        startActivity(Intent(this@WeatherActivity, RegisterActivity::class.java))
+                        finish()
+                    })
+                    setNegativeButton("No", DialogInterface.OnClickListener { dialog, _ ->
+                        dialog.dismiss()
+                    })
+                }
+                dialog.show()
+            }
         }
         return super.onOptionsItemSelected(item)
     }

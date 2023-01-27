@@ -1,4 +1,4 @@
-package com.perennial.openweatherapp.db
+package com.perennial.openweatherapp.db.user
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

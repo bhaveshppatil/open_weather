@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.perennial.openweatherapp.R
 import com.perennial.openweatherapp.databinding.ActivityRegisterBinding
-import com.perennial.openweatherapp.utils.Constants
 import com.perennial.openweatherapp.utils.Constants.printLog
 import com.perennial.openweatherapp.utils.Constants.showToast
 import com.perennial.openweatherapp.utils.CustomMultiColorProgressBar
@@ -32,7 +31,6 @@ class RegisterActivity : AppCompatActivity(), StateListener {
         binding.tvHaveAnAccountUp.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
-            finish()
         }
 
         binding.btnSignup.setOnClickListener {
@@ -49,18 +47,12 @@ class RegisterActivity : AppCompatActivity(), StateListener {
         showToast(this, message!!)
         printLog(message)
         startActivity(Intent(this, WeatherActivity::class.java))
-        finish()
-
     }
 
     override fun onError(message: String) {
         progressBar.hideProgressBar()
-        showToast(this, message!!)
+        showToast(this, message)
         printLog(message)
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-
-    }
 }
