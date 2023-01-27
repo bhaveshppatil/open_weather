@@ -9,7 +9,6 @@ import com.perennial.openweatherapp.R
 import com.perennial.openweatherapp.databinding.ActivityRegisterBinding
 import com.perennial.openweatherapp.utils.Constants.printLog
 import com.perennial.openweatherapp.utils.Constants.showToast
-import com.perennial.openweatherapp.utils.CustomMultiColorProgressBar
 import com.perennial.openweatherapp.utils.StateListener
 import com.perennial.openweatherapp.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,13 +17,10 @@ import dagger.hilt.android.AndroidEntryPoint
 class RegisterActivity : AppCompatActivity(), StateListener {
     private lateinit var binding: ActivityRegisterBinding
     private val viewModel by viewModels<UserViewModel>()
-    private lateinit var progressBar: CustomMultiColorProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_register)
-        progressBar =
-            CustomMultiColorProgressBar(this, "Please wait...\nWe're running your request")
         binding.viewModel = viewModel
         viewModel.stateListener = this
 
@@ -38,19 +34,15 @@ class RegisterActivity : AppCompatActivity(), StateListener {
         }
     }
 
-    override fun onLoading() {
-        progressBar.showProgressBar()
-    }
+    override fun onLoading() {}
 
     override fun onSuccess(message: String?) {
-        progressBar.hideProgressBar()
         showToast(this, message!!)
         printLog(message)
         startActivity(Intent(this, WeatherActivity::class.java))
     }
 
     override fun onError(message: String) {
-        progressBar.hideProgressBar()
         showToast(this, message)
         printLog(message)
     }
